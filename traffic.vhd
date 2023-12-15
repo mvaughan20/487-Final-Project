@@ -46,7 +46,7 @@ ARCHITECTURE behavioral of traffic is
             v_sync : IN STD_LOGIC;
             pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
             pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
-            car_x : IN STD_LOGIC_VECTOR (10 DOWNTO 0); -- current car x position
+            car_x_pos : IN STD_LOGIC_VECTOR (10 DOWNTO 0); -- current car x position
             start : IN STD_LOGIC; -- initiates start
             red : OUT STD_LOGIC;
             green : OUT STD_LOGIC;
@@ -114,7 +114,7 @@ BEGIN
         v_sync => S_vsync, 
         pixel_row => S_pixel_row, 
         pixel_col => S_pixel_col, 
-        car_x => carpos, 
+        car_x_pos => carpos, 
         start => start_game, 
         red => S_red, 
         green => S_green, 
