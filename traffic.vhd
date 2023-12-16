@@ -87,8 +87,8 @@ BEGIN
     ADC_SCLK <= serial_clk;
     sample_clk <= count(9); -- sampling clock is low for 16 SCLKs
     ADC_CS <= sample_clk;
-    -- Multiplies ADC output (0-4095) by 1/32 to give bat position (0-128)
-    carpos <= ("000" & adout(11 DOWNTO 4)) + adout(11 DOWNTO 5);
+    -- Shift right ADC output (0-4095) by 8 to give bat position (0-15)
+    carpos <= ("0000000" & adout(11 DOWNTO 8));
     adc : adc_if
     PORT MAP(-- instantiate ADC serial to parallel interface
         SCK => serial_clk, 
@@ -102,7 +102,7 @@ BEGIN
     start_proc : process(clk_in)
     BEGIN
         If rising_edge(clk_in) THEN
-            IF adout > "000000001001" THEN
+            IF adout > "000000000001" THEN
                 start_game <= '1';
             END IF;
             previous_potentiometer <= adout;
