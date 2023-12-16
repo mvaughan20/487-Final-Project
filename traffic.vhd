@@ -14,7 +14,8 @@ ENTITY traffic is
         ADC_CS : OUT STD_LOGIC; -- ADC signals
         ADC_SCLK : OUT STD_LOGIC;
         ADC_SDATA1 : IN STD_LOGIC;
-        ADC_SDATA2 : IN STD_LOGIC
+        ADC_SDATA2 : IN STD_LOGIC;
+        brake : IN STD_LOGIC
    );
 END traffic;
 
@@ -50,7 +51,8 @@ ARCHITECTURE behavioral of traffic is
             start : IN STD_LOGIC; -- initiates start
             red : OUT STD_LOGIC;
             green : OUT STD_LOGIC;
-            blue : OUT STD_LOGIC
+            blue : OUT STD_LOGIC;
+            brake : IN STD_LOGIC
         );
     END COMPONENT;
     
@@ -118,7 +120,8 @@ BEGIN
         start => start_game, 
         red => S_red, 
         green => S_green, 
-        blue => S_blue
+        blue => S_blue,
+        brake => brake
     );
     
     
