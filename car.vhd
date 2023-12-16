@@ -24,11 +24,12 @@ ARCHITECTURE behavioral of car is
     CONSTANT wheel_size : INTEGER := 12;
     CONSTANT inactive_street_width : INTEGER := 200; -- width of street will be approximately 2/3 of 800px
     CONSTANT inactive_street_height : INTEGER := 100;
-    CONSTANT active_street_width : INTEGER := 100;
-    CONSTANT active_street_height : INTEGER := 50;
+    CONSTANT active_street_width : INTEGER := 125;
+    CONSTANT active_street_height : INTEGER := 100;
     CONSTANT win_street_width : INTEGER := 50;
     CONSTANT win_street_height : INTEGER := 100;
     SIGNAL car_on : STD_LOGIC;
+    SIGNAL car_speed : STD_LOGIC_VECTOR (10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(0, 11);
     SIGNAL inactive_street_on : STD_LOGIC;
     SIGNAL active_street_on : STD_LOGIC;
     SIGNAL win_street_on : STD_LOGIC;
@@ -42,7 +43,6 @@ BEGIN
 	blue  <= car_on;
 	cdraw : PROCESS (car_x, car_y, pixel_row, pixel_col) IS
 	BEGIN
-	   IF start = '1' THEN
 		IF (pixel_col >= car_x - car_body_width) AND
 		 (pixel_col <= car_x + car_body_width) AND
 			 (pixel_row >= car_y - car_body_height) AND
@@ -61,7 +61,6 @@ BEGIN
 			car_on <= '0';
 		END IF;
             
-		END IF;
 	END PROCESS cdraw;
 	
 	wheel : PROCESS (car_x, car_y, pixel_row, pixel_col) IS 
@@ -93,7 +92,6 @@ BEGIN
 	
 	inactive_street_draw : PROCESS IS
 	BEGIN
-	   IF start = '1' THEN
 	   IF (pixel_col >= 200 - inactive_street_width) AND
 		 (pixel_col <= 200 + inactive_street_width) AND
 			 (pixel_row >= 300 - inactive_street_height) AND
@@ -102,26 +100,22 @@ BEGIN
 		ELSE
 			inactive_street_on <= '0';
 		END IF;
-		END IF;
 	END PROCESS inactive_street_draw;
 	
 	active_street_draw : PROCESS IS
 	BEGIN
-	   IF start = '1' THEN
-	   IF (pixel_col >= 450 - inactive_street_width) AND
-		 (pixel_col <= 450 + inactive_street_width) AND
-			 (pixel_row >= 300 - inactive_street_height) AND
-			 (pixel_row <= 300 + inactive_street_height) THEN
+	   IF (pixel_col >= 525 - active_street_width) AND
+		 (pixel_col <= 525 + active_street_width) AND
+			 (pixel_row >= 300 - active_street_height) AND
+			 (pixel_row <= 300 + active_street_height) THEN
 				active_street_on <= '1';
 		ELSE
 			active_street_on <= '0';
-		END IF;
 		END IF;
 	END PROCESS active_street_draw;
 	
 	win_street : PROCESS IS
 	BEGIN
-	   IF start = '1' THEN
 	   IF (pixel_col >= 750 - win_street_width) AND
 		 (pixel_col <= 750 + win_street_width) AND
 			 (pixel_row >= 300 - win_street_height) AND
@@ -130,13 +124,25 @@ BEGIN
 		ELSE
 			win_street_on <= '0';
 		END IF;
-		END IF;
 	END PROCESS win_street;
+	
+	update_speed : PROCESS(car_x_pos) IS 
+	BEGIN
+	   IF car_x_pos > car_speed THEN
+	       car_speed <= car_x_pos;
+	   END IF;
+	END PROCESS update_speed;
 	
 	mcar : PROCESS IS
 	BEGIN
 	   WAIT UNTIL rising_edge(v_sync);
-	   car_x <= car_x + car_x_pos;
+	  
+	   IF (car_x + car_body_width) >= (800) THEN
+            car_x <= CONV_STD_LOGIC_VECTOR(50, 11); -- reset to starting position
+       ELSE
+            car_x <= car_x + car_speed;
+	   END IF;
+	   
 	END PROCESS mcar;
 
 END behavioral;
