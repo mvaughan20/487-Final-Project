@@ -102,7 +102,7 @@ BEGIN
     start_proc : process(clk_in)
     BEGIN
         If rising_edge(clk_in) THEN
-            IF adout > "000000000001" THEN
+            IF ("0000000" & adout(11 DOWNTO 8)) > "000000000000" THEN
                 start_game <= '1';
             END IF;
             previous_potentiometer <= adout;
