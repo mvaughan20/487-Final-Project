@@ -12,7 +12,8 @@ ENTITY car is
         start : IN STD_LOGIC; -- initiates start
         red : OUT STD_LOGIC;
         green : OUT STD_LOGIC;
-        blue : OUT STD_LOGIC
+        blue : OUT STD_LOGIC;
+        brake : IN STD_LOGIC
     );
 END car;
 
@@ -21,20 +22,14 @@ ARCHITECTURE behavioral of car is
     CONSTANT car_body_height : INTEGER := 18;
     CONSTANT car_top_width : INTEGER := 23;
     CONSTANT car_top_height : INTEGER := 27;
-    CONSTANT wheel_size : INTEGER := 12;
     CONSTANT inactive_street_width : INTEGER := 200; -- width of street will be approximately 2/3 of 800px
-    CONSTANT inactive_street_height : INTEGER := 100;
+    CONSTANT inactive_street_height, active_street_height : INTEGER := 100;
     CONSTANT active_street_width : INTEGER := 125;
-    CONSTANT active_street_height : INTEGER := 100;
-    CONSTANT win_street_width : INTEGER := 50;
-    CONSTANT win_street_height : INTEGER := 100;
     SIGNAL car_on : STD_LOGIC;
-    SIGNAL car_speed : STD_LOGIC_VECTOR (10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(0, 11);
-    SIGNAL inactive_street_on : STD_LOGIC;
-    SIGNAL active_street_on : STD_LOGIC;
-    SIGNAL win_street_on : STD_LOGIC;
-    SIGNAL vx, vy : STD_LOGIC_VECTOR (10 DOWNTO 0); 
-    SIGNAL vx1, vy1 : STD_LOGIC_VECTOR (10 DOWNTO 0); 
+    SIGNAL reset : STD_LOGIC := '0';
+    SIGNAL car_speed, car_brake : STD_LOGIC_VECTOR (10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(0, 11);
+    SIGNAL inactive_street_on, active_street_on, win_street_on : STD_LOGIC;
+    SIGNAL vx, vy, vx1, vy1 : STD_LOGIC_VECTOR (10 DOWNTO 0);
     SIGNAL car_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(50, 11);
     SIGNAL car_y : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
 BEGIN
@@ -53,9 +48,9 @@ BEGIN
 			     (pixel_row >= (car_y - 19) - car_top_height) AND
 		  	        (pixel_row <= (car_y - 19) + car_top_height) THEN
 				car_on <= '1';
-		ELSIF((vx * vx) + (vy * vy)) < (wheel_size * wheel_size) THEN -- test if radial distance < bsize
+		ELSIF((vx * vx) + (vy * vy)) < (144) THEN -- test if radial distance < bsize
             car_on <= '1';
-        ELSIF((vx1 * vx1) + (vy1 * vy1)) < (wheel_size * wheel_size) THEN -- test if radial distance < bsize
+        ELSIF((vx1 * vx1) + (vy1 * vy1)) < (144) THEN -- test if radial distance < bsize
             car_on <= '1';
 		ELSE
 			car_on <= '0';
@@ -116,10 +111,10 @@ BEGIN
 	
 	win_street : PROCESS IS
 	BEGIN
-	   IF (pixel_col >= 750 - win_street_width) AND
-		 (pixel_col <= 750 + win_street_width) AND
-			 (pixel_row >= 300 - win_street_height) AND
-			 (pixel_row <= 300 + win_street_height) THEN
+	   IF (pixel_col >= 700) AND
+		 (pixel_col <= 800) AND
+			 (pixel_row >= 200) AND
+			 (pixel_row <= 400) THEN
 				win_street_on <= '1';
 		ELSE
 			win_street_on <= '0';
@@ -128,10 +123,21 @@ BEGIN
 	
 	update_speed : PROCESS(car_x_pos) IS 
 	BEGIN
+	
 	   IF car_x_pos > car_speed THEN
 	       car_speed <= car_x_pos;
 	   END IF;
+	   
 	END PROCESS update_speed;
+	
+	update_brake : PROCESS IS
+	BEGIN
+	   IF brake = '1' THEN
+            car_brake <= "00000000001";
+       ELSIF brake = '0' THEN
+            car_brake <= "00000000000";
+       END IF;
+	END PROCESS update_brake;
 	
 	mcar : PROCESS IS
 	BEGIN
@@ -139,8 +145,13 @@ BEGIN
 	  
 	   IF (car_x + car_body_width) >= (800) THEN
             car_x <= CONV_STD_LOGIC_VECTOR(50, 11); -- reset to starting position
+            
        ELSE
-            car_x <= car_x + car_speed;
+            IF car_brake > car_speed THEN
+                car_x <= car_x;
+            ELSE 
+             car_x <= car_x + car_speed - car_brake;
+            END IF;
 	   END IF;
 	   
 	END PROCESS mcar;
