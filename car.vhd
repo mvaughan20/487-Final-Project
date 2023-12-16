@@ -34,7 +34,7 @@ ARCHITECTURE behavioral of car is
     SIGNAL win_street_on : STD_LOGIC;
     SIGNAL vx, vy : STD_LOGIC_VECTOR (10 DOWNTO 0); 
     SIGNAL vx1, vy1 : STD_LOGIC_VECTOR (10 DOWNTO 0); 
-    SIGNAL car_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(400, 11);
+    SIGNAL car_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(50, 11);
     SIGNAL car_y : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
 BEGIN
     red <= NOT car_on; -- color setup for blue car on green background
