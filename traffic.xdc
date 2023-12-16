@@ -21,3 +21,5 @@ set_property -dict { PACKAGE_PIN D18 IOSTANDARD LVCMOS33 } [get_ports { ADC_SDAT
 set_property -dict { PACKAGE_PIN E18 IOSTANDARD LVCMOS33 } [get_ports { ADC_SDATA2 }]; #IO_L21P_T3_DQS_15 Sch=ja[3]
 set_property -dict { PACKAGE_PIN G17 IOSTANDARD LVCMOS33 } [get_ports { ADC_SCLK }]; #IO_L18N_T2_A23_15 Sch=ja[4]
 set_property -dict { PACKAGE_PIN C17 IOSTANDARD LVCMOS33 } [get_ports { ADC_CS }]; #IO_L20N_T3_A19_15 Sch=ja[1]
+
+set_property -dict { PACKAGE_PIN N17 IOSTANDARD LVCMOS33 } [get_ports { brake }]; #BTNC brake button
