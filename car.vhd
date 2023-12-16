@@ -132,5 +132,11 @@ BEGIN
 		END IF;
 		END IF;
 	END PROCESS win_street;
+	
+	mcar : PROCESS IS
+	BEGIN
+	   WAIT UNTIL rising_edge(v_sync);
+	   car_x <= car_x + car_x_pos;
+	END PROCESS mcar;
 
 END behavioral;
