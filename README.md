@@ -1,5 +1,5 @@
-# Group 4 - CPE487 Final Project
-## Shady Kamel, Anthony Guadagno, Matthew Vaughan
+# CPE487 Final Project: Traffic Light Simulation
+## Group 4- Shady Kamel, Anthony Guadagno, Matthew Vaughan
 * Our project consists of a traffic light simulation game using our FPGA's VGA output. The game will be controlled by the same potentiometer and Pmod AD1 used in lab 6. 
 * The goal of the game is to have the car make it to the end of a road, but the game will end if the car runs the red light. When the car reaches the intersection, a timer will trigger that will eventually change the light from green to red. The car is then free to drive to the end of the road and "win" the game. 
 * Our codebase is built upon pieces of labs 3 and 6 respectively, as we were able to use some of the VGA and movement components from each lab. 
