@@ -7,6 +7,6 @@
 ##### SCREENSHOT WILL GO HERE
 ### 1. Car Model and Movement
 ##### CAR SCREENSHOT 
-* The car is generated in car.vhd, where the wheels, 
+* The car is generated in car.vhd, where the wheels and body of the car are drawn separately. The left wheel and right wheel are drawn with the same algorithm, but are placed 50 pixels apart. The rest of the car is drawn in cdraw, which creates 2 rectangles to form the body of the car. 
 ### 2. Traffic Light Model and Counter
 ### 3. Win/Loss Conditions
