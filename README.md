@@ -16,5 +16,5 @@
 * The remaining time will be displayed on the FPGA's built in display using the leddec function.
 ##### TIMER SCREENSHOT 
 ### 3. Loss Conditions
-* If the player fails the game, the loss indicator will be displayed <EITHER ON VGA SCREEN OR BOARD DISPLAY>
+* If the player fails the game, the loss indicator will be displayed 	<sup> EITHER ON VGA SCREEN OR BOARD DISPLAY </sup>
 * there is a separate button on the FPGA used to reset the game in the case the player gets a game over. It will reset the car to its original position and set the timer back to zero. 
