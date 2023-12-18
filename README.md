@@ -12,6 +12,9 @@
 ### 2. Traffic Light Model and Counter
 * When the car reaches the intersection, a timer is triggered which will count down the traffic light changing from red to green.
 ##### LIGHT SCREENSHOT 
-* The remaining time will be displayed on the FPGA's built in display using the leddec function. Once the timer is completed and the light changes to green, the car will be able to pass the intersection.
+* Once the timer is completed and the light changes to green, the car will be able to pass the intersection.
+* The remaining time will be displayed on the FPGA's built in display using the leddec function.
 ##### TIMER SCREENSHOT 
-### 3. Win/Loss Conditions
+### 3. Loss Conditions
+* If the player fails the game, the loss indicator will be displayed <EITHER ON VGA SCREEN OR BOARD DISPLAY>
+* there is a separate button on the FPGA used to reset the game in the case the player gets a game over. It will reset the car to its original position and set the timer back to zero. 
