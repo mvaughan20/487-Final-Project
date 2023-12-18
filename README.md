@@ -17,4 +17,5 @@
 > TIMER SCREENSHOT 
 ### 3. Loss Conditions
 * If the player fails the game, the loss indicator will be displayed 	<sup> EITHER ON VGA SCREEN OR BOARD DISPLAY </sup>
-* There is a separate button on the FPGA used to reset the game in the case the player gets a game over. It will reset the car to its original position and set the timer back to zero. 
+* There is a separate button on the FPGA used to reset the game in the case the player gets a game over. It will reset the car to its original position and set the timer back to zero.
+> GAME OVER SCREENSHOT 
