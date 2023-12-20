@@ -56,6 +56,16 @@ ARCHITECTURE behavioral of traffic is
         );
     END COMPONENT;
     
+    COMPONENT light is 
+        PORT (
+            v_sync : IN STD_LOGIC;
+            pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
+            pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
+            red : OUT STD_LOGIC;
+            green : OUT STD_LOGIC;
+            blue : OUT STD_LOGIC
+        );
+    END COMPONENT;
     
     COMPONENT vga_sync IS
         PORT (
@@ -123,7 +133,6 @@ BEGIN
         blue => S_blue,
         brake => brake
     );
-    
     
     
     vga_driver : vga_sync
