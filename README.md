@@ -18,7 +18,10 @@
 ### 3. Loss Conditions
 * If the player fails the game, the loss indicator will be displayed 	<sup> EITHER ON VGA SCREEN OR BOARD DISPLAY </sup>
 * There is a separate button on the FPGA used to reset the game in the case the player gets a game over. It will reset the car to its original position and set the timer back to zero.
-> GAME OVER SCREENSHOT 
+> GAME OVER SCREENSHOT
+
+### Methodology & Modifications
+
 ### Components Used
 Images below from Lab 6 README (link: https://github.com/byett/dsd/tree/CPE487-Fall2023/Nexys-A7/Lab-6)
 * Pmod AD1 (12-bit analog-to-digital converter)
@@ -57,3 +60,16 @@ Link: https://reference.digilentinc.com/_media/reference/programmable-logic/nexy
    * Click 'Open Hardware Manager' and click 'Open Target' then 'Auto Connect'
    * Click 'Program Device' then xc7a100t_0 to download traffic.bit to the Nexys A7-100T board
    * Turn the knob to start the game and increase the car's speed. Good Luck!
+### Contributions:
+* Anthony Guadagno:
+  - 
+* Matthew Vaughan:
+  - 
+* Shady Kamel:
+  - 
+
+Summary of the process:
+
+Timeline of the Project:
+
+Challenges and Solutions:
