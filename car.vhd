@@ -32,6 +32,24 @@ ARCHITECTURE behavioral of car is
     SIGNAL vx, vy, vx1, vy1 : STD_LOGIC_VECTOR (10 DOWNTO 0);
     SIGNAL car_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(50, 11);
     SIGNAL car_y : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
+    
+    
+    -- Traffic Light Component
+    SIGNAL S_red, S_green, S_blue : STD_LOGIC; --_VECTOR (3 DOWNTO 0);
+    SIGNAL S_vsync : STD_LOGIC;
+    SIGNAL S_pixel_row, S_pixel_col : STD_LOGIC_VECTOR (10 DOWNTO 0);
+    
+    COMPONENT light is 
+        PORT (
+            v_sync : IN STD_LOGIC;
+            pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
+            pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
+            red : OUT STD_LOGIC;
+            green : OUT STD_LOGIC;
+            blue : OUT STD_LOGIC
+        );
+    END COMPONENT;
+    
 BEGIN
     red <= NOT car_on; -- color setup for blue car on green background
 	green <= NOT inactive_street_on AND NOT active_street_on AND NOT win_street_on AND NOT car_on;
@@ -155,5 +173,14 @@ BEGIN
 	   END IF;
 	   
 	END PROCESS mcar;
-
+	
+    add_light : light
+    PORT MAP (
+        v_sync => S_vsync, 
+        pixel_row => S_pixel_row, 
+        pixel_col => S_pixel_col, 
+        red => S_red, 
+        green => S_green, 
+        blue => S_blue
+    );
 END behavioral;
