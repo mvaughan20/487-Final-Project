@@ -72,6 +72,7 @@ Summary of the process:
 Timeline of the Project:
 * We planned out our project outline and general approach to our ideas over the course of the last week of classes. We knew with our limited time during finals we needed a strong approach to streamline our workflow when we actually began coding after taking our CPE487 final exam. 
 * Due to our planning and ideas we has before coding, most of our coding was able to be achieved over the course of 2 days. Our first day mostly consisted of indivudal work, but our 2nd day consisted of a long zoom call with all team members present to get everything finalized and working for the presentation and final submission. 
+
 Challenges and Solutions:
 * Reformatting color in car.vhd: 
 * "Multiple drivers" errors: In VHDL, signals are meant to be driven by a single source at any given time to avoid conflicts and ensure proper simulation and synthesis behavior. However, we initially wrote some parts of the code with multiple sources for the same signal, such as the car's velocity or boolean variables that would trigger things such as game over or timer. We were forced to reformat large chunks of the code using if statements to avoid signal conflicts.  
