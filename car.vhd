@@ -32,13 +32,17 @@ ARCHITECTURE behavioral of car is
     SIGNAL vx, vy, vx1, vy1 : STD_LOGIC_VECTOR (10 DOWNTO 0);
     SIGNAL car_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(50, 11);
     SIGNAL car_y : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
-    
+    SIGNAL red_on : STD_LOGIC;
+    SIGNAL yellow_on : STD_LOGIC;
+    SIGNAL green_on : STD_LOGIC;
+        SIGNAL lx, ly, lx1, ly1, lx2, ly2 : STD_LOGIC_VECTOR (10 DOWNTO 0);
+
     
    
     
 BEGIN
-    red <= NOT car_on; -- color setup for blue car on green background
-	green <= NOT inactive_street_on AND NOT active_street_on AND NOT win_street_on AND NOT car_on;
+    red <= NOT car_on AND red_on AND yellow_on; -- color setup for blue car on green background
+	green <= NOT inactive_street_on AND NOT active_street_on AND NOT win_street_on AND NOT car_on AND green_on AND yellow_on;
 	blue  <= car_on;
 	cdraw : PROCESS (car_x, car_y, pixel_row, pixel_col) IS
 	BEGIN
@@ -160,5 +164,58 @@ BEGIN
 	   
 	END PROCESS mcar;
 	
+	lightdraw : PROCESS (pixel_row, pixel_col) IS
+	BEGIN
+		IF((lx * lx) + (ly * ly)) < (225) THEN -- test if radial distance < bsize
+            red_on <= '1';
+        ELSIF((lx1 * lx1) + (ly1 * ly1)) < (225) THEN -- test if radial distance < bsize
+            yellow_on <= '1';
+        ELSIF((lx1 * lx1) + (ly1 * ly1)) < (225) THEN -- test if radial distance < bsize
+            green_on <= '1';
+		ELSE
+			red_on <= '0';
+			yellow_on <= '0';
+			green_on <= '0';
+		END IF;
+            
+	END PROCESS lightdraw;
+	
+	circle : PROCESS (pixel_row, pixel_col) IS 
+	BEGIN
+	   IF pixel_col <= 675 THEN -- vx = |ball_x - pixel_col|
+            lx <= (675) - pixel_col;
+        ELSE
+            lx <= pixel_col - (675);
+        END IF;
+        IF pixel_row <= 225 THEN -- vy = |ball_y - pixel_row|
+            ly <= (225) - pixel_row;
+        ELSE
+            ly <= pixel_row - (225);
+        END IF;
+        
+        
+        
+        IF pixel_col <= 675 THEN -- vx = |ball_x - pixel_col|
+            lx1 <= (675) - pixel_col;
+        ELSE
+            lx1 <= pixel_col - (675);
+        END IF;
+        IF pixel_row <= 300 THEN -- vy = |ball_y - pixel_row|
+            ly1 <= (300) - pixel_row;
+        ELSE
+            ly1 <= pixel_row - (300);
+        END IF;
+        
+         IF pixel_col <= 675 THEN -- vx = |ball_x - pixel_col|
+            lx2 <= (675) - pixel_col;
+        ELSE
+            lx2 <= pixel_col - (675);
+        END IF;
+        IF pixel_row <= 375 THEN -- vy = |ball_y - pixel_row|
+            ly2 <= (375) - pixel_row;
+        ELSE
+            ly2 <= pixel_row - (375);
+        END IF;
+	END PROCESS circle;
     
 END behavioral;
