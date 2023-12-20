@@ -13,7 +13,6 @@
 * The car moves based speed set by the controller, where the velocity of the car gets incrementally faster by turning the knob up. The car is only able to slow down via the break button on the FPGA, which slowly decrements the car speed until it comes to a full stop. 
 ### 2. Traffic Light Model and Counter
 * When the car reaches the intersection, a timer is triggered which will count down the traffic light changing from red to green.
-> LIGHT SCREENSHOT 
 * Once the timer is completed and the light changes to green, the car will be able to pass the intersection.
 * The remaining time will be displayed on the FPGA's built in display using the leddec function.
 ### 3. Loss Conditions
