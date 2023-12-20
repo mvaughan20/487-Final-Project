@@ -38,3 +38,22 @@ Images below from Lab 6 README (link: https://github.com/byett/dsd/tree/CPE487-F
 
 ### FPGA Reference Manual
 Link: https://reference.digilentinc.com/_media/reference/programmable-logic/nexys-a7/nexys-a7_rm.pdf
+
+### How to Duplicate The Project:
+1. Create a new RTL project ***traffic*** in Vivado Quick Start
+    * Create [] new source files of file type VHDL called []
+    - clk_wiz_0.vhd, vga_sync.vhd, adc_if.vhd, and clk_wiz_0_clk_wiz.vhd are the same files as in Lab 6
+    * Create a new constraint file of file type XDC called traffic
+    * Choose Nexys A7-100T board for the project
+    * Click 'Finish'
+    * Click design sources and copy the VHDL code from []
+    * Click constraints and copy the code from traffic.xdc
+   
+3. Run Synthesis
+4. Run Implementation
+5. Generate Bitstream
+6. Open Hardware Manager & Program Device
+   * Connect the potentiometer controller to the AD1 and connect both to the board using the top pins of the Pmod port JA (Section 10 of the Reference Manual linked above)
+   * Click 'Open Hardware Manager' and click 'Open Target' then 'Auto Connect'
+   * Click 'Program Device' then xc7a100t_0 to download traffic.bit to the Nexys A7-100T board
+   * Turn the knob to start the game and increase the car's speed. Good Luck!
