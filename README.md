@@ -73,3 +73,4 @@ Summary of the process:
 Timeline of the Project:
 
 Challenges and Solutions:
+* "Multiple drivers" errors: In VHDL, signals are meant to be driven by a single source at any given time to avoid conflicts and ensure proper simulation and synthesis behavior
