@@ -72,4 +72,5 @@ Summary of the process:
 Timeline of the Project:
 
 Challenges and Solutions:
-* "Multiple drivers" errors: In VHDL, signals are meant to be driven by a single source at any given time to avoid conflicts and ensure proper simulation and synthesis behavior
+* Reformatting color in car.vhd: 
+* "Multiple drivers" errors: In VHDL, signals are meant to be driven by a single source at any given time to avoid conflicts and ensure proper simulation and synthesis behavior. However, we initially wrote some parts of the code with multiple sources for the same signal, such as the car's velocity or boolean variables that would trigger things such as game over or timer. We were forced to reformat large chunks of the code using if statements to avoid signal conflicts.  
