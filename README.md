@@ -4,7 +4,6 @@
 * The goal of the game is to have the car make it to the end of a road, but the game will end if the car runs the red light. When the car reaches the intersection, a timer will trigger that will eventually change the light from green to red. The car is then free to drive to the end of the road and "win" the game. 
 * Our codebase is built upon pieces of labs 3 and 6 respectively, as we were able to use some of the VGA and movement components from each lab. 
 ### The game in action:
-> SCREENSHOT WILL GO HERE
 ### 1. Car Model and Movement
 ![new_colors](https://github.com/mvaughan20/Group-4-Final-Project/assets/94701716/db0fb355-f5fb-45dc-87ea-6a36eb759e74)
 
@@ -15,11 +14,9 @@
 > LIGHT SCREENSHOT 
 * Once the timer is completed and the light changes to green, the car will be able to pass the intersection.
 * The remaining time will be displayed on the FPGA's built in display using the leddec function.
-> TIMER SCREENSHOT 
 ### 3. Loss Conditions
 * If the player fails the game, the car will be reset at the starting position at zero velocity. 
 * The car also resets to the beginning at zero velocity when the player wins the game. 
-> GAME OVER SCREENSHOT
 
 ### Methodology & Modifications
 
