@@ -4,8 +4,10 @@
 * The goal of the game is to have the car make it to the end of a road, but the game will end if the car runs the red light. When the car reaches the intersection, a timer will trigger that will eventually change the light from green to red. The car is then free to drive to the end of the road and "win" the game. 
 * Our codebase is built upon pieces of labs 3 and 6 respectively, as we were able to use some of the VGA and movement components from each lab. 
 ### The game in action:
-### 1. Car Model and Movement
+
 ![new_colors](https://github.com/mvaughan20/Group-4-Final-Project/assets/94701716/db0fb355-f5fb-45dc-87ea-6a36eb759e74)
+### 1. Car Model and Movement
+
 
 * The car is generated in car.vhd, where the wheels and body of the car are drawn separately. The left wheel and right wheel are drawn with the same algorithm, but are placed 50 pixels apart. The rest of the car is drawn in cdraw, which creates 2 rectangles to form the body of the car.
 * The car moves based speed set by the controller, where the velocity of the car gets incrementally faster by turning the knob up. The car is only able to slow down via the break button on the FPGA, which slowly decrements the car speed until it comes to a full stop. 
