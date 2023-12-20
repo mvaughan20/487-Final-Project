@@ -134,6 +134,16 @@ BEGIN
         brake => brake
     );
     
+    add_light : light
+    PORT MAP (
+        v_sync => S_vsync, 
+        pixel_row => S_pixel_row, 
+        pixel_col => S_pixel_col, 
+        red => S_red, 
+        green => S_green, 
+        blue => S_blue
+    );
+    
     
     vga_driver : vga_sync
     PORT MAP(--instantiate vga_sync component
