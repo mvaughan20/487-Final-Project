@@ -35,15 +35,31 @@ ARCHITECTURE behavioral of car is
     SIGNAL red_on : STD_LOGIC;
     SIGNAL yellow_on : STD_LOGIC;
     SIGNAL green_on : STD_LOGIC;
+    SIGNAL red_turn_on, yellow_turn_on, green_turn_on : STD_LOGIC := '0';
         SIGNAL lx, ly, lx1, ly1, lx2, ly2 : STD_LOGIC_VECTOR (10 DOWNTO 0);
+    
+    SIGNAL counter_start : STD_LOGIC := '0';
+    SIGNAL car_safe : STD_LOGIC := '0';
+    SIGNAL counter : STD_LOGIC_VECTOR(10 downto 0) := "00000000000";
 
     
    
     
 BEGIN
-    red <= NOT car_on AND red_on AND yellow_on; -- color setup for blue car on green background
-	green <= NOT inactive_street_on AND NOT active_street_on AND NOT win_street_on AND NOT car_on AND green_on AND yellow_on;
-	blue  <= car_on;
+    red <=  '0' WHEN car_on = '1' ELSE
+    '1' WHEN inactive_street_on = '1' ELSE
+	          '1' WHEN active_street_on = '1' ELSE
+	          '1' WHEN win_street_on = '1' ELSE
+            '1' WHEN red_on = '1' ELSE
+            '1' WHEN yellow_on = '1' ELSE
+            '0';
+	green <= 
+	          '1' WHEN green_on = '1' ELSE
+	          '1' WHEN yellow_on = '1' ELSE
+	          '0';
+	blue  <= '1' WHEN car_on = '1' ELSE
+	           '0' WHEN red_on = '1' ELSE
+	          '0';
 	cdraw : PROCESS (car_x, car_y, pixel_row, pixel_col) IS
 	BEGIN
 		IF (pixel_col >= car_x - car_body_width) AND
@@ -151,7 +167,7 @@ BEGIN
 	BEGIN
 	   WAIT UNTIL rising_edge(v_sync);
 	  
-	   IF (car_x + car_body_width) >= (800) THEN
+	   IF car_safe = '0' AND (car_x+car_body_width >= 525 + active_street_width) THEN
             car_x <= CONV_STD_LOGIC_VECTOR(50, 11); -- reset to starting position
             
        ELSE
@@ -166,11 +182,12 @@ BEGIN
 	
 	lightdraw : PROCESS (pixel_row, pixel_col) IS
 	BEGIN
-		IF((lx * lx) + (ly * ly)) < (225) THEN -- test if radial distance < bsize
+	    
+		IF((lx * lx) + (ly * ly)) < (225) AND red_turn_on = '1' THEN -- test if radial distance < bsize
             red_on <= '1';
-        ELSIF((lx1 * lx1) + (ly1 * ly1)) < (225) THEN -- test if radial distance < bsize
+        ELSIF((lx1 * lx1) + (ly1 * ly1)) < (225) AND yellow_turn_on = '1' THEN -- test if radial distance < bsize
             yellow_on <= '1';
-        ELSIF((lx1 * lx1) + (ly1 * ly1)) < (225) THEN -- test if radial distance < bsize
+        ELSIF((lx2 * lx2) + (ly2 * ly2)) < (225) AND green_turn_on = '1' THEN -- test if radial distance < bsize
             green_on <= '1';
 		ELSE
 			red_on <= '0';
@@ -206,6 +223,7 @@ BEGIN
             ly1 <= pixel_row - (300);
         END IF;
         
+        
          IF pixel_col <= 675 THEN -- vx = |ball_x - pixel_col|
             lx2 <= (675) - pixel_col;
         ELSE
@@ -218,4 +236,31 @@ BEGIN
         END IF;
 	END PROCESS circle;
     
+    cnt_start : PROCESS (counter_start) IS -- start counter if car passes a certain point
+	BEGIN
+	   IF car_x + car_body_width >= 525 - active_street_width THEN
+	       counter_start <= '1';
+	   END IF;
+	END PROCESS cnt_start;   
+	
+	cnt : PROCESS (counter) IS -- counter
+	BEGIN
+	   IF counter_start <= '1' AND rising_edge(v_sync) THEN
+	       
+	       IF counter >= 60000 THEN
+	           car_safe <= '1';
+	           counter <= "00000000000";
+	           red_turn_on <= '0';
+	           green_turn_on <= '1';
+	       ELSIF counter = 600 THEN
+	           yellow_turn_on <= '0';
+	           red_turn_on <= '1';
+	       END IF;
+	       counter <= counter + 1;
+	       yellow_turn_on <= '1';
+	       
+	   END IF;
+	END PROCESS cnt;
+
+	
 END behavioral;
