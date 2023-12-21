@@ -171,21 +171,19 @@ BEGIN
 	   WAIT UNTIL rising_edge(v_sync);
           IF reset = '1' THEN
                car_x <= CONV_STD_LOGIC_VECTOR(50, 11); -- reset to starting location
-               car_x_stop <= CONV_STD_LOGIC_VECTOR(0, 11);
+               
                     
           END IF;
 	  
 	  
 	   IF car_safe = '0' AND (car_x+car_body_width >= 525 + active_street_width) THEN
-            car_x_stop <= car_x; -- freeze car
+            car_x <= car_x; -- freeze car
        ELSIF car_safe = '1' AND (car_x-car_body_width >= 800) THEN
-            car_x_stop <= car_x; -- freeze car
+            car_x <= car_x; -- freeze car
          
        ELSE
             
-            IF car_x_stop > CONV_STD_LOGIC_VECTOR(0, 11) THEN
-                car_x <= car_x_stop;  
-            ELSIF car_brake > car_speed THEN
+            IF car_brake > car_speed THEN
                 car_x <= car_x;   
             ELSE 
              car_x <= car_x + car_speed - car_brake;
