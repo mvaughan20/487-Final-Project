@@ -8,7 +8,7 @@ ENTITY car is
         v_sync : IN STD_LOGIC;
         pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
         pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
-        car_x_pos : IN STD_LOGIC_VECTOR (10 DOWNTO 0); -- current car x position
+        car_x_pos : IN STD_LOGIC_VECTOR (10 DOWNTO 0);
         start : IN STD_LOGIC; -- initiates start
         red : OUT STD_LOGIC;
         green : OUT STD_LOGIC;
@@ -79,7 +79,7 @@ BEGIN
 		ELSE
 			car_on <= '0';
 		END IF;
-            
+        
 	END PROCESS cdraw;
 	
 	wheel : PROCESS (car_x, car_y, pixel_row, pixel_col) IS 
@@ -236,25 +236,29 @@ BEGIN
         END IF;
 	END PROCESS circle;
     
-    cnt_start : PROCESS (counter_start) IS -- start counter if car passes a certain point
+    cnt_start : PROCESS (car_x) IS -- start counter if car passes a certain point
 	BEGIN
 	   IF car_x + car_body_width >= 525 - active_street_width THEN
 	       counter_start <= '1';
 	   END IF;
 	END PROCESS cnt_start;   
 	
-	cnt : PROCESS (counter) IS -- counter
+	cnt : PROCESS (counter_start) IS -- counter
 	BEGIN
 	   IF counter_start <= '1' AND rising_edge(v_sync) THEN
 	       
-	       IF counter >= CONV_STD_LOGIC_VECTOR(6000, 11) THEN
+	       IF counter = CONV_STD_LOGIC_VECTOR(6000, 11) THEN
 	           car_safe <= '1';
-	           counter <= "00000000000";
 	           red_turn_on <= '0';
 	           green_turn_on <= '1';
+	           counter <= counter + 1;
+	       ELSIF counter >= CONV_STD_LOGIC_VECTOR(7000, 11) THEN
+	           counter <= "00000000000";
+	           green_turn_on <= '0';
 	       ELSIF counter = CONV_STD_LOGIC_VECTOR(2, 11) THEN
 	           yellow_turn_on <= '1';
 	           counter <= counter + 1;
+	           car_safe <= '0';
 	       ELSIF counter = CONV_STD_LOGIC_VECTOR(300, 11) THEN
 	           yellow_turn_on <= '0';
 	           red_turn_on <= '1';
