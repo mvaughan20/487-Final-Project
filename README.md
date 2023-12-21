@@ -63,7 +63,8 @@ Link: https://reference.digilentinc.com/_media/reference/programmable-logic/nexy
 * Anthony Guadagno:
   - 
 * Matthew Vaughan:
-  - 
+  - Main readme contributor (format, documentation)
+  - Worked on clock, game over/reset, leddec 
 * Shady Kamel:
   - 
 
