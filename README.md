@@ -68,12 +68,12 @@ Link: https://reference.digilentinc.com/_media/reference/programmable-logic/nexy
   - 
 
 ### Summary of the process:
-##### 1. Began the project by setting up the base of the code, which was largely made by reworking components from labs 3 and 6 for our game, such as the car model, road and basic movement.
-##### 2. Began to create the car speed method, which was slowly increased based on the input from the controller.
-##### 3. Created the stoplight model and set the colors accordingly.
-##### 4. Created clock and implemented it with light 
-##### 5. Finalized win and loss conditions
-##### 6. Set up timer to display on FPGA screen via leddec
+* 1. Began the project by setting up the base of the code, which was largely made by reworking components from labs 3 and 6 for our game, such as the car model, road and basic movement.
+* 2. Began to create the car speed method, which was slowly increased based on the input from the controller.
+* 3. Created the stoplight model and set the colors accordingly.
+* 4. Created clock and implemented it with light 
+* 5. Finalized win and loss conditions
+* 6. Set up timer to display on FPGA screen via leddec
 
 ### Timeline of the Project:
 * We planned out our project outline and general approach to our ideas over the course of the last week of classes. We knew with our limited time during finals we needed a strong approach to streamline our workflow when we actually began coding after taking our CPE487 final exam. 
