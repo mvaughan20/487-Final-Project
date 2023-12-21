@@ -13,7 +13,8 @@ ENTITY car is
         red : OUT STD_LOGIC;
         green : OUT STD_LOGIC;
         blue : OUT STD_LOGIC;
-        brake : IN STD_LOGIC
+        brake : IN STD_LOGIC;
+        reset : IN STD_LOGIC
     );
 END car;
 
@@ -26,11 +27,12 @@ ARCHITECTURE behavioral of car is
     CONSTANT inactive_street_height, active_street_height : INTEGER := 100;
     CONSTANT active_street_width : INTEGER := 125;
     SIGNAL car_on : STD_LOGIC;
-    SIGNAL reset : STD_LOGIC := '0';
     SIGNAL car_speed, car_brake : STD_LOGIC_VECTOR (10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(0, 11);
     SIGNAL inactive_street_on, active_street_on, win_street_on : STD_LOGIC;
     SIGNAL vx, vy, vx1, vy1 : STD_LOGIC_VECTOR (10 DOWNTO 0);
     SIGNAL car_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(50, 11);
+    SIGNAL car_x_stop : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(0, 11);
+    
     SIGNAL car_y : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL red_on : STD_LOGIC;
     SIGNAL yellow_on : STD_LOGIC;
@@ -41,7 +43,6 @@ ARCHITECTURE behavioral of car is
     SIGNAL counter_start : STD_LOGIC := '0';
     SIGNAL car_safe : STD_LOGIC := '0';
     SIGNAL counter : STD_LOGIC_VECTOR(10 downto 0) := "00000000000";
-
     
    
     
@@ -148,7 +149,9 @@ BEGIN
 	update_speed : PROCESS(car_x_pos) IS 
 	BEGIN
 	
-	   IF car_x_pos > car_speed THEN
+	   IF reset = '1' THEN
+	       car_speed <= CONV_STD_LOGIC_VECTOR(0, 11);
+	   ELSIF car_x_pos > car_speed THEN
 	       car_speed <= car_x_pos;
 	   END IF;
 	   
@@ -157,7 +160,7 @@ BEGIN
 	update_brake : PROCESS IS
 	BEGIN
 	   IF brake = '1' THEN
-            car_brake <= "00000000010";
+            car_brake <= "00000000100";
        ELSIF brake = '0' THEN
             car_brake <= "00000000000";
        END IF;
@@ -168,11 +171,19 @@ BEGIN
 	   WAIT UNTIL rising_edge(v_sync);
 	  
 	   IF car_safe = '0' AND (car_x+car_body_width >= 525 + active_street_width) THEN
-            car_x <= CONV_STD_LOGIC_VECTOR(50, 11); -- reset to starting position
-            
+            car_x_stop <= car_x; -- freeze car
+       ELSIF car_safe = '1' AND (car_x-car_body_width >= 800) THEN
+            car_x_stop <= car_x; -- freeze car
+         
        ELSE
-            IF car_brake > car_speed THEN
-                car_x <= car_x;
+            IF reset = '1' THEN
+                car_x <= CONV_STD_LOGIC_VECTOR(50, 11); -- reset to starting location
+                car_x_stop <= CONV_STD_LOGIC_VECTOR(0, 11);
+            
+            ELSIF car_x_stop > CONV_STD_LOGIC_VECTOR(0, 11) THEN
+                car_x <= car_x_stop;  
+            ELSIF car_brake > car_speed THEN
+                car_x <= car_x;   
             ELSE 
              car_x <= car_x + car_speed - car_brake;
             END IF;
