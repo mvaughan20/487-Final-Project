@@ -168,14 +168,11 @@ BEGIN
 	
 	mcar : PROCESS IS
 	BEGIN
-	   WAIT UNTIL rising_edge(v_sync);
-          IF reset = '1' THEN
-               car_x <= CONV_STD_LOGIC_VECTOR(50, 11); -- reset to starting location
-               
-                    
+	       IF reset = '1' THEN
+               car_x <= "00000110010"; -- reset to starting location
           END IF;
-	  
-	  
+	   WAIT UNTIL rising_edge(v_sync);
+          
 	   IF car_safe = '0' AND (car_x+car_body_width >= 525 + active_street_width) THEN
             car_x <= car_x; -- freeze car
        ELSIF car_safe = '1' AND (car_x-car_body_width >= 800) THEN
