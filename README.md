@@ -42,12 +42,12 @@ Link: https://reference.digilentinc.com/_media/reference/programmable-logic/nexy
 
 ### How to Duplicate The Project:
 1. Create a new RTL project ***traffic*** in Vivado Quick Start
-    * Create 7 new source files of file type VHDL called []
+    * Create 7 new source files of file type VHDL called traffic
       - clk_wiz_0.vhd, vga_sync.vhd, adc_if.vhd, and clk_wiz_0_clk_wiz.vhd are the same files as in Lab 6
     * Create a new constraint file of file type XDC called traffic
     * Choose Nexys A7-100T board for the project
     * Click 'Finish'
-    * Click design sources and copy the VHDL code from []
+    * Click design sources and copy the VHDL code from traffic
     * Click constraints and copy the code from traffic.xdc
    
 3. Run Synthesis
