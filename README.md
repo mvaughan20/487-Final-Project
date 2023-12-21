@@ -14,7 +14,6 @@
 ### 2. Traffic Light Model and Counter
 * When the car reaches the intersection, a timer is triggered which will count down the traffic light changing from red to green.
 * Once the timer is completed and the light changes to green, the car will be able to pass the intersection.
-* The remaining time will be displayed on the FPGA's built in display using the leddec function.
 ### 3. Loss Conditions
 * If the player fails the game, the car will stop moving in place. 
 * The right button on the FPGA will cause the car to be reset at the starting position at zero velocity. 
@@ -64,7 +63,7 @@ Link: https://reference.digilentinc.com/_media/reference/programmable-logic/nexy
   - 
 * Matthew Vaughan:
   - Main readme contributor (format, documentation)
-  - Worked on clock, game over/reset, leddec 
+  - Worked on clock, game over/reset
 * Shady Kamel:
   - 
 
@@ -73,8 +72,7 @@ Link: https://reference.digilentinc.com/_media/reference/programmable-logic/nexy
 * 2. Began to create the car speed method, which was slowly increased based on the input from the controller.
 * 3. Created the stoplight model and set the colors accordingly.
 * 4. Created clock and implemented it with light 
-* 5. Finalized win and loss conditions
-* 6. Set up timer to display on FPGA screen via leddec
+* 5. Finalized win and loss conditions/reset button
 
 ### Timeline of the Project:
 * We planned out our project outline and general approach to our ideas over the course of the last week of classes. We knew with our limited time during finals we needed a strong approach to streamline our workflow when we actually began coding after taking our CPE487 final exam. 
