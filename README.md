@@ -5,10 +5,10 @@
 * Our codebase is built upon pieces of labs 3 and 6 respectively, as we were able to use some of the VGA and movement components from each lab. 
 ### The game in action:
 
-![new_colors](https://im.ezgif.com/tmp/ezgif-1-a6bb10edfc.gif)
+![](https://im.ezgif.com/tmp/ezgif-1-a6bb10edfc.gif)
 
 
-![new_colors](https://im.ezgif.com/tmp/ezgif-1-e288dedaa1.gif)
+![](https://im.ezgif.com/tmp/ezgif-1-e288dedaa1.gif)
 
 
 ![new_colors](https://github.com/mvaughan20/Group-4-Final-Project/assets/94701716/db0fb355-f5fb-45dc-87ea-6a36eb759e74)
