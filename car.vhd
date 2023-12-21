@@ -245,20 +245,21 @@ BEGIN
 	
 	cnt : PROCESS (counter_start) IS -- counter
 	BEGIN
-	   IF counter_start <= '1' AND rising_edge(v_sync) THEN
+	   IF counter_start = '1' AND rising_edge(v_sync) THEN
 	       
-	       IF counter = CONV_STD_LOGIC_VECTOR(6000, 11) THEN
+	       IF counter = CONV_STD_LOGIC_VECTOR(1500, 11) THEN
 	           car_safe <= '1';
 	           red_turn_on <= '0';
 	           green_turn_on <= '1';
 	           counter <= counter + 1;
-	       ELSIF counter >= CONV_STD_LOGIC_VECTOR(7000, 11) THEN
+	       ELSIF counter >= CONV_STD_LOGIC_VECTOR(2000, 11) THEN
 	           counter <= "00000000000";
 	           green_turn_on <= '0';
 	       ELSIF counter = CONV_STD_LOGIC_VECTOR(2, 11) THEN
 	           yellow_turn_on <= '1';
-	           counter <= counter + 1;
 	           car_safe <= '0';
+	           counter <= counter + 1;
+	           
 	       ELSIF counter = CONV_STD_LOGIC_VECTOR(300, 11) THEN
 	           yellow_turn_on <= '0';
 	           red_turn_on <= '1';
