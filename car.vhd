@@ -157,7 +157,7 @@ BEGIN
 	update_brake : PROCESS IS
 	BEGIN
 	   IF brake = '1' THEN
-            car_brake <= "00000000001";
+            car_brake <= "00000000010";
        ELSIF brake = '0' THEN
             car_brake <= "00000000000";
        END IF;
@@ -247,17 +247,25 @@ BEGIN
 	BEGIN
 	   IF counter_start <= '1' AND rising_edge(v_sync) THEN
 	       
-	       IF counter >= 60000 THEN
+	       IF counter >= CONV_STD_LOGIC_VECTOR(6000, 11) THEN
 	           car_safe <= '1';
 	           counter <= "00000000000";
 	           red_turn_on <= '0';
 	           green_turn_on <= '1';
-	       ELSIF counter = 600 THEN
+	       ELSIF counter = CONV_STD_LOGIC_VECTOR(2, 11) THEN
+	           yellow_turn_on <= '1';
+	           counter <= counter + 1;
+	       ELSIF counter = CONV_STD_LOGIC_VECTOR(300, 11) THEN
 	           yellow_turn_on <= '0';
 	           red_turn_on <= '1';
+	           counter <= counter + 1;
+
+           ELSE 
+               counter <= counter + 1;
+
 	       END IF;
-	       counter <= counter + 1;
-	       yellow_turn_on <= '1';
+	       
+
 	       
 	   END IF;
 	END PROCESS cnt;
