@@ -16,8 +16,8 @@
 * Once the timer is completed and the light changes to green, the car will be able to pass the intersection.
 * The remaining time will be displayed on the FPGA's built in display using the leddec function.
 ### 3. Loss Conditions
-* If the player fails the game, the car will be reset at the starting position at zero velocity. 
-* The car also resets to the beginning at zero velocity when the player wins the game. 
+* If the player fails the game, the car will stop moving in place. 
+* The right button on the FPGA will cause the car to be reset at the starting position at zero velocity. 
 
 ### Methodology & Modifications
 
@@ -83,4 +83,5 @@ Link: https://reference.digilentinc.com/_media/reference/programmable-logic/nexy
 ### Challenges and Solutions:
 * Reformatting color in car.vhd: 
 * "Multiple drivers" errors: In VHDL, signals are meant to be driven by a single source at any given time to avoid conflicts and ensure proper simulation and synthesis behavior. However, we initially wrote some parts of the code with multiple sources for the same signal, such as the car's velocity or boolean variables that would trigger things such as game over or timer. We were forced to reformat large chunks of the code using if statements to avoid signal conflicts.
-* Timer starting on: 
+* Timer starting on:
+* Reset function: 
