@@ -60,7 +60,7 @@ Link: https://reference.digilentinc.com/_media/reference/programmable-logic/nexy
    * Turn the knob to start the game and increase the car's speed. Good Luck!
 ### Contributions:
 * Anthony Guadagno:
-  - 
+  - Worked on implementing counter and reset
 * Matthew Vaughan:
   - Main readme contributor (format, documentation)
   - Worked on clock, game over/reset
